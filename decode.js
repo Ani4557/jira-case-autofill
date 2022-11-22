@@ -7,10 +7,11 @@
 function toDict(serialNumber) {
   let model = serialNumber.substring(0, 5);
   let manufacturingDate = serialNumber.substring(5, 9);
-  
-  console.log(model);
-  console.log(manufacturingDate);
-
+  let batch = serialNumber.substring(10, 13);
+  return {"model": model, "manufacturingDate": manufacturingDate, "batch": batch};
 }
 
-toDict("0203205220021");
+const a = toDict("0203205220021");
+console.log(a.model);
+console.log(a.manufacturingDate);
+console.log(a.batch);
