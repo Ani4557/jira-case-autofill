@@ -21,54 +21,62 @@ const setNativeValue = (element, value) => {
 };
 
 const fillSummary = (input, text) => {
-    setNativeValue(input, text);
-    input.dispatchEvent(new Event("input", {
+    const i = document.getElementById(input);
+    setNativeValue(i, text);
+    i.dispatchEvent(new Event("input", {
         bubbles: true
     }));
 };
 
 const fillDescription = (input, text) => {
-    input.innerHTML = text; 
+    const i = document.querySelector(input);
+    i.innerHTML = text; 
 };
 
-const fillDate = (dateInput, dateHiddenInput, dateDiv, date) => {
+const fillDate = (dateInput, dateHiddenInput, /*dateContainer,*/ button, date) => {
+    const d = document.getElementById(dateInput);
+    const h = document.querySelector(dateHiddenInput);
+    const b = document.querySelectorAll(button);
+
     // Takes input MMYY and enters in MM/01/20YY to the form input and 20YY-MM-01 to the hidden input
     const month = date.substring(0, 2);
     const year = date.substring(2, 4)
 
-    setNativeValue(dateInput, `${month}/1/20${year}`);
-    dateInput.dispatchEvent(new Event("input", {
+    setNativeValue(d, `${month}/1/20${year}`);
+    d.dispatchEvent(new Event("input", {
         bubbles: true
     }));
 
-    setNativeValue(dateHiddenInput, `20${year}-${month}-1`);
-    dateHiddenInput.dispatchEvent(new Event("input", {
-        bubbles: false
-    }));
+    setTimeout(() => {
+        setNativeValue(h, `20${year}-${month}-1`);
+        h.dispatchEvent(new Event("input", {
+            bubbles: false
+        }));
+    }, 1000);
 
     // Gets the first div that has the text "Select Date" inside #duedate-container
-    const divs = document.querySelectorAll(dateDiv)
-    divs.forEach(div => {
-        if (div.innerHTML === "Due date") {
-            div.innerHTML = `${month}/1/20${year}`;
-            return;
-        }
-    });
+    // const divs = document.querySelectorAll(dateContainer)
+    // divs.forEach(div => {
+    //     if (div.innerHTML === "Due date") {
+    //         div.innerHTML = `${month}/1/20${year}`;
+    //         continue;
+    //     }
+    // });
+    // setTimeout(() => {
+    //     b.forEach((button) => {
+    //         if (button.innerHTML === "1")
+    //             button.click();
+    //     });
+    // }, 10000);
 };
 
-fillSummary(document.getElementById("summary-field"), "Summary text");
-fillDescription(document.querySelector("#description-container p"), "Description text");
-fillDate(document.getElementById("react-select-5-input"), document.querySelector("#duedate-container input"), "#duedate-container", "1221");
-
-// const date = document.querySelector("#duedate-container input");
-// setNativeValue(date, "2022-12-15");
-// date.dispatchEvent(new Event("input", {
-//     bubbles: false
-// }));
+fillSummary("summary-field", "Summary text");
+fillDescription("#description-container p", "Description text");
+fillDate("react-select-9-input", "#duedate-container input", /*"#duedate-container",*/ "#duedate-container button", "1020");
 
 
-// const date2 = document.getElementById("react-select-5-input");
-// setNativeValue(date2, "12/15/2022");
-// date2.dispatchEvent(new Event("input", {
-//     bubbles: true
-// }));
+buttons = document.querySelectorAll("#duedate-container button");
+buttons.forEach((button) => {
+    if (button.innerHTML === "1")
+        button.click();
+});
