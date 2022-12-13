@@ -76,7 +76,7 @@ fillDate("react-select-9-input", "#duedate-container input", /*"#duedate-contain
 
 
 
-buttons = document.querySelectorAll("#duedate-container button");
+const buttons = document.querySelectorAll("#duedate-container button");
 for (let i = 0; i < buttons.length; i++) {
     if (buttons[i].innerHTML === "1") {
         buttons[i].click();
