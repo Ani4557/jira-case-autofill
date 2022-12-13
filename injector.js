@@ -75,8 +75,20 @@ fillDescription("#description-container p", "Description text");
 fillDate("react-select-9-input", "#duedate-container input", /*"#duedate-container",*/ "#duedate-container button", "1020");
 
 
+
 buttons = document.querySelectorAll("#duedate-container button");
+for (let i = 0; i < buttons.length; i++) {
+    if (buttons[i].innerHTML === "1") {
+        buttons[i].click();
+        break;
+    }
+}
+    
+/*
 buttons.forEach((button) => {
     if (button.innerHTML === "1")
         button.click();
 });
+*/
+
+
