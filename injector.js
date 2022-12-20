@@ -28,21 +28,20 @@ const setNativeValue = (element, value) => {
 const fillSmallField = (smallFieldLabelText, text) => {
 
     // Select small field container based on its label and get its id
+    let summaryContainerId = "";
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
         if (label.innerHTML === smallFieldLabelText) {
             const parents = getParents(label);
-            containerId = parents[1].id;
+            summaryContainerId = parents[1].id;
+            const summaryContainer = document.getElementById(summaryContainerId);
+            setNativeValue(summaryContainer, text);
+            summaryContainer.dispatchEvent(new Event("input", {
+                bubbles: true
+            }));
             break;
         }
     }
-
-    //TODO: Finish fillSmallField
-
-    setNativeValue(summaryContainer, text);
-    summaryContainer.dispatchEvent(new Event("input", {
-        bubbles: true
-    }));
 };
 
 const fillLargeField = (descriptionContainerId, text) => {
