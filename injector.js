@@ -25,41 +25,53 @@ const setNativeValue = (element, value) => {
     }
 };
 
-const fillSummary = (input, text) => {
-    const i = document.getElementById(input);
-    setNativeValue(i, text);
-    i.dispatchEvent(new Event("input", {
+const fillSummary = (summaryContainerId, text) => {
+    const summaryContainer = document.getElementById(summaryContainerId);
+    setNativeValue(summaryContainer, text);
+    summaryContainer.dispatchEvent(new Event("input", {
         bubbles: true
     }));
 };
 
-const fillDescription = (input, text) => {
-    const i = document.querySelector(input);
-    i.innerHTML = text; 
+const fillDescription = (descriptionContainerId, text) => {
+    const descriptionContainer = document.querySelector(descriptionContainerId);
+    descriptionContainer.innerHTML = text; 
 };
 
 const fillDate = (dateLabelText, date) => {
+    let containerId = "";
+    const month = date.substring(0, 2);
+    const year = date.substring(2, 4);
 
-    let buttonId;
-    let containerId;
-
+    // Select date container based on its label, and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === dateLabelText)
-        {
+        if (label.innerHTML === dateLabelText) {
             const parents = getParents(label);
-            return parents[1].id;  
+            containerId = parents[1].id;
         }
     }
-    const b = document.querySelectorAll(button);
 
-    const month = date.substring(0, 2);
-    const year = date.substring(2, 4)
+    // Use the id to then trigger the input in order to display the date picker
+    const inputs = document.querySelectorAll(`#${containerId} input`);
+    for (const input of inputs) {
+        if (input.id && input.id.includes("react-select")) {
+            reactSelectInput = document.getElementById(`#${input.id}`)
+            setNativeValue(reactSelectInput, `${month}/1/20${year}`);
+            reactSelectInput.dispatchEvent(new Event("input", {
+                bubbles: true
+            }));
+            break;
+        }
+    }
 
-    setNativeValue(d, `${month}/1/20${year}`);
-    d.dispatchEvent(new Event("input", {
-        bubbles: true
-    }));
+    // Click the button corresponding to the first day of the month
+    const buttons = document.querySelectorAll(`#${containerId} button`);
+    buttons = document.querySelectorAll("#duedate-container button");
+    for (const button of buttons) {
+        if (button.innerHTML === "1")
+            button.click();
+    };
 };
 
 const shade = (element) => {
