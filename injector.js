@@ -4,8 +4,13 @@
  * Author  : Ani
  */
 
-const shade = (element) => {
-    element.setAttribute("style", "background-color: rgba(23, 111, 203, 0.2)");
+const getParents = (element) => {
+  let parents = [];
+  while (element.parentNode && element.parentNode.nodeName.toLowerCase() != "body") {
+    element = element.parentNode;
+    parents.push(element);
+  }
+  return parents;
 };
 
 const setNativeValue = (element, value) => {
@@ -33,8 +38,19 @@ const fillDescription = (input, text) => {
     i.innerHTML = text; 
 };
 
-const fillDate = (dateInput, button, date) => {
-    const d = document.getElementById(dateInput);
+const fillDate = (dateLabelText, date) => {
+
+    let buttonId;
+    let containerId;
+
+    const labels = document.querySelectorAll("label");
+    for (const label of labels) {
+        if (label.innerHTML === dateLabelText)
+        {
+            const parents = getParents(label);
+            return parents[1].id;  
+        }
+    }
     const b = document.querySelectorAll(button);
 
     const month = date.substring(0, 2);
@@ -46,6 +62,12 @@ const fillDate = (dateInput, button, date) => {
     }));
 };
 
+const shade = (element) => {
+    element.setAttribute("style", "background-color: rgba(23, 111, 203, 0.2)");
+};
+
+
+
 fillSummary("summary-field", "Summary text");
 fillDescription("#description-container p", "Description text");
 fillDate("react-select-9-input", "#duedate-container button", "1020");
@@ -56,3 +78,5 @@ buttons.forEach((button) => {
     if (button.innerHTML === "1")
         button.click();
 });
+
+
