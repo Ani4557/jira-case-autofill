@@ -25,17 +25,31 @@ const setNativeValue = (element, value) => {
     }
 };
 
-const fillSummary = (summaryContainerId, text) => {
-    const summaryContainer = document.getElementById(summaryContainerId);
+const fillSmallField = (smallFieldLabelText, text) => {
+
+    // Select small field container based on its label and get its id
+    const labels = document.querySelectorAll("label");
+    for (const label of labels) {
+        if (label.innerHTML === smallFieldLabelText) {
+            const parents = getParents(label);
+            containerId = parents[1].id;
+            break;
+        }
+    }
+
+    //TODO: Finish fillSmallField
+
     setNativeValue(summaryContainer, text);
     summaryContainer.dispatchEvent(new Event("input", {
         bubbles: true
     }));
 };
 
-const fillDescription = (descriptionContainerId, text) => {
+const fillLargeField = (descriptionContainerId, text) => {
     const descriptionContainer = document.querySelector(descriptionContainerId);
     descriptionContainer.innerHTML = text; 
+
+        //TODO: Upgrade fillLargeField
 };
 
 const fillDate = (dateLabelText, date) => {
@@ -43,12 +57,13 @@ const fillDate = (dateLabelText, date) => {
     const month = date.substring(0, 2);
     const year = date.substring(2, 4);
 
-    // Select date container based on its label, and get its id
+    // Select date container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
         if (label.innerHTML === dateLabelText) {
             const parents = getParents(label);
             containerId = parents[1].id;
+            break;
         }
     }
 
