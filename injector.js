@@ -56,7 +56,7 @@ const fillDate = (dateLabelText, date) => {
     const inputs = document.querySelectorAll(`#${containerId} input`);
     for (const input of inputs) {
         if (input.id && input.id.includes("react-select")) {
-            reactSelectInput = document.getElementById(`#${input.id}`)
+            const reactSelectInput = document.getElementById(input.id);
             setNativeValue(reactSelectInput, `${month}/1/20${year}`);
             reactSelectInput.dispatchEvent(new Event("input", {
                 bubbles: true
@@ -67,7 +67,6 @@ const fillDate = (dateLabelText, date) => {
 
     // Click the button corresponding to the first day of the month
     const buttons = document.querySelectorAll(`#${containerId} button`);
-    buttons = document.querySelectorAll("#duedate-container button");
     for (const button of buttons) {
         if (button.innerHTML === "1")
             button.click();
@@ -82,7 +81,7 @@ const shade = (element) => {
 
 fillSummary("summary-field", "Summary text");
 fillDescription("#description-container p", "Description text");
-fillDate("react-select-9-input", "#duedate-container button", "1020");
+fillDate("Due date", "1020");
 
 
 // buttons = document.querySelectorAll("#duedate-container button");
