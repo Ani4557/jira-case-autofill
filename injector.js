@@ -103,33 +103,46 @@ const fillDate = (dateLabel, date) => {
     }
 };
 
+//FIXME: filFropDownMenu
 const fillDropDownMenu = (dropDownLabel, selectionPath) => {
     // Selection path would look something like this: ["Category", "Subcategory", "Product"]
     // Find dropdown menu based on its label and get its id
+    // Use the id to then trigger the input in order to display the dropdown menu
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
         if (label.innerHTML === dropDownLabel) {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
+            // TODO: Again, what if the order changes
         }
     }
 
-    // Use the id to then trigger the input in order to display the dropdown menu
-    const inputs = document.querySelectorAll(`#${containerId} input`);
-    for (const input of inputs) {
-        if (input.id && input.id.includes("react-select")) {
-            const reactSelectInput = document.getElementById(input.id);
-            setNativeValue(reactSelectInput, selectionPath[0]);
-            reactSelectInput.dispatchEvent(new Event("input", {
-                bubbles: true
-            }));
-            break;
+    
+    for (const step of selectionPath) {
+        const inputs = document.querySelectorAll(`#${containerId} input`);
+
+        // Get the furthest react-select id
+        let reactSelectInputId;
+        for (const input of inputs) {
+            if (input.id && input.id.includes("react-select")) 
+                reactSelectInputId = input;
+        }
+
+        // Pop up the furthest menu
+        const reactSelectInput = document.getElementById(reactSelectInputId);
+        setNativeValue(reactSelectInput, step);
+        reactSelectInput.dispatchEvent(new Event("input", {
+            bubbles: true
+        }));
+
+        // Pick the selected option
+        const options = document.querySelectorAll(`#${containerId} div`);
+        for (const option of options) {
+            if (option.id && option.id.includes("react-select") && option.innerHTML === step)
+                option.click();
         }
     }
-
-    /*TODO: do while; use the first input to trigger the selection and pick the wanted button;
-    then search for the next input and pick the next wanted button; repeat until end of path*/
 };
 
 const shade = (element) => {
