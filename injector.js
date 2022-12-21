@@ -26,22 +26,32 @@ const setNativeValue = (element, value) => {
 };
 
 const fillSmallField = (smallFieldLabelText, text) => {
-
     // Select small field container based on its label and get its id
-    let summaryContainerId = "";
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
         if (label.innerHTML === smallFieldLabelText) {
             const parents = getParents(label);
-            summaryContainerId = parents[1].id;
-            const summaryContainer = document.getElementById(summaryContainerId);
-            setNativeValue(summaryContainer, text);
-            summaryContainer.dispatchEvent(new Event("input", {
+            const smallFieldInput = document.querySelector(`#${parents[1].id} input`);
+            setNativeValue(smallFieldInput, text);
+            smallFieldInput.dispatchEvent(new Event("input", {
                 bubbles: true
             }));
             break;
         }
     }
+};
+
+const fillSummary = (text) => {
+    const summaryInput = document.getElementById("summary-field");
+    setNativeValue(summaryInput, text);
+    summaryInput.dispatchEvent(new Event("input", {
+        bubbles: true
+    }));
+};
+
+const fillDescription = (input, text) => {
+    const i = document.querySelector(input);
+    i.innerHTML = text; 
 };
 
 const fillLargeField = (descriptionContainerId, text) => {
@@ -96,12 +106,3 @@ const shade = (element) => {
 fillSummary("summary-field", "Summary text");
 fillDescription("#description-container p", "Description text");
 fillDate("Due date", "1020");
-
-
-// buttons = document.querySelectorAll("#duedate-container button");
-// buttons.forEach((button) => {
-//     if (button.innerHTML === "1")
-//         button.click();
-// });
-
-
