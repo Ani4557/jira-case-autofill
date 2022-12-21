@@ -25,11 +25,11 @@ const setNativeValue = (element, value) => {
     }
 };
 
-const fillSmallField = (smallFieldLabelText, text) => {
+const fillSmallField = (smallFieldLabel, text) => {
     // Find small field container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === smallFieldLabelText) {
+        if (label.innerHTML === smallFieldLabel) {
             const parents = getParents(label);
 
             // Go up and get the container's id
@@ -67,7 +67,7 @@ const fillLargeField = (descriptionContainerId, text) => {
         //TODO: Upgrade fillLargeField
 };
 
-const fillDate = (dateLabelText, date) => {
+const fillDate = (dateLabel, date) => {
     let containerId = "";
     const month = date.substring(0, 2);
     const year = date.substring(2, 4);
@@ -75,7 +75,7 @@ const fillDate = (dateLabelText, date) => {
     // Find date container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === dateLabelText) {
+        if (label.innerHTML === dateLabel) {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
@@ -103,26 +103,33 @@ const fillDate = (dateLabelText, date) => {
     }
 };
 
-const fillDropDownMenu = (label, selectionPath) => {
+const fillDropDownMenu = (dropDownLabel, selectionPath) => {
     // Selection path would look something like this: ["Category", "Subcategory", "Product"]
     // Find dropdown menu based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === dateLabelText) {
+        if (label.innerHTML === dropDownLabel) {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
         }
     }
 
-    // Follow the selection path
-    for (stage of selectionPath) {
-        // React to the input to show the menu using the ith category
-        
+    // Use the id to then trigger the input in order to display the dropdown menu
+    const inputs = document.querySelectorAll(`#${containerId} input`);
+    for (const input of inputs) {
+        if (input.id && input.id.includes("react-select")) {
+            const reactSelectInput = document.getElementById(input.id);
+            setNativeValue(reactSelectInput, selectionPath[0]);
+            reactSelectInput.dispatchEvent(new Event("input", {
+                bubbles: true
+            }));
+            break;
+        }
     }
 
-
-
+    /*TODO: do while; use the first input to trigger the selection and pick the wanted button;
+    then search for the next input and pick the next wanted button; repeat until end of path*/
 };
 
 const shade = (element) => {
