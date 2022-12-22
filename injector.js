@@ -103,7 +103,6 @@ const fillDate = (dateLabel, date) => {
     }
 };
 
-//FIXME: filFropDownMenu
 const fillDropDownMenu = (dropDownLabel, selectionPath) => {
     // Selection path would look something like this: ["Category", "Subcategory", "Product"]
     // Find dropdown menu based on its label and get its id
@@ -117,7 +116,6 @@ const fillDropDownMenu = (dropDownLabel, selectionPath) => {
             // TODO: Again, what if the order changes
         }
     }
-
     
     for (const step of selectionPath) {
         const inputs = document.querySelectorAll(`#${containerId} input`);
@@ -125,8 +123,8 @@ const fillDropDownMenu = (dropDownLabel, selectionPath) => {
         // Get the furthest react-select id
         let reactSelectInputId;
         for (const input of inputs) {
-            if (input.id && input.id.includes("react-select")) 
-                reactSelectInputId = input;
+            if (input.id && input.id.includes("react-select"))
+                reactSelectInputId = input.id;
         }
 
         // Pop up the furthest menu
@@ -151,5 +149,12 @@ const shade = (element) => {
 
 
 
-fillSmallField("Serial Number", "020320122R007");
-fillDate("Due date", "1020");
+// fillSmallField("Serial Number", "020320122R007");
+// fillDate("Due date", "1020");
+
+fillDropDownMenu("Product / Model", ["Splitter Switch", "SPS-01-031, NEMA 10-30/14-50 / 24 Amp"]);
+
+
+
+
+
