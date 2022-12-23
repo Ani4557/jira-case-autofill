@@ -1,0 +1,10 @@
+{
+    "fields": 
+    [
+        "Due date": 
+        {
+            "type": "smallField",
+            ""
+        }
+    ]
+}
