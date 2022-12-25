@@ -12,7 +12,3 @@
 //       });
 //     }
 // });
-
-const intervalId = setInterval(() => {
-  chrome.tabs.sendMessage({state: true});
-}, 5000);

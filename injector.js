@@ -13,6 +13,16 @@ const getParents = (element) => {
   return parents;
 };
 
+const getParentContainerIdFromLabel = (labelText) => {
+    const labels = document.querySelectorAll("label");
+    for (const label of labels) {
+        if (label.innerHTML === labelText) {
+            const parents = getParents(label);
+            return parents[1].id;
+        }
+    }
+};
+
 const setNativeValue = (element, value) => {
     const valueSetter = Object.getOwnPropertyDescriptor(element, "value").set;
     const prototype = Object.getPrototypeOf(element);
@@ -44,25 +54,25 @@ const fillSmallField = (smallFieldLabel, text) => {
     }
 };
 
-const fillSummary = (text) => {
-    const summaryInput = document.getElementById("summary-field");
-    setNativeValue(summaryInput, text);
-    summaryInput.dispatchEvent(new Event("input", {
-        bubbles: true
-    }));
-};
+// const fillSummary = (text) => {
+//     const summaryInput = document.getElementById("summary-field");
+//     setNativeValue(summaryInput, text);
+//     summaryInput.dispatchEvent(new Event("input", {
+//         bubbles: true
+//     }));
+// };
 
 // TODO: combine the 2 functions above by ignoring <span>*</span>
 // TODO: write backup code in case the index of parent div with an id changes
 
-const fillDescription = (input, text) => {
-    const i = document.querySelector(input);
-    i.innerHTML = text; 
-};
+// const fillDescription = (input, text) => {
+//     const i = document.querySelector(input);
+//     i.innerHTML = text; 
+// };
 
-const fillLargeField = (descriptionContainerId, text) => {
-    const descriptionContainer = document.querySelector(descriptionContainerId);
-    descriptionContainer.innerHTML = text; 
+const fillLargeField = (largeFieldLabelId, text) => {
+    const descriptionContainer = document.querySelector(largeFieldLabelId);
+    
 
         //TODO: Upgrade fillLargeField
 };
@@ -113,7 +123,6 @@ const fillDropDownMenu = (dropDownLabel, selectionPath) => {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
-            // TODO: Again, what if the order changes
         }
     }
     
