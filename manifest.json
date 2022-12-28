@@ -2,7 +2,7 @@
     "name": "Jira Issue Autofill",
     "version": "0.1.0",
     "description": "Faster issue reporting with serial number decoder and canned responses",
-    "permissions": ["storage", "tabs"],
+    "permissions": ["storage", "tabs", "webNavigation"],
     "host_permissions": ["https://*.atlassian.net/*"],
     "background": {
       "service_worker": "background.js"
