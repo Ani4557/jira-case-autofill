@@ -4,11 +4,15 @@
  * Author  : Ani
  */
 
-// chrome.tabs.onUpdated.addListener((tabId, tab) => {
-//     if (tab.url && tab.url.includes("atlassian.net")) {
-//       console.log("On page bg");
-//       chrome.tabs.sendMessage(tabId, {
-//         state: true
-//       });
-//     }
-// });
+chrome.webNavigation.onCompleted.addListener((details) => {
+    if (details.frameId === 0) {
+        chrome.tabs.get(details.tabId, (tab) => {
+            if(tab.url === details.url) {
+                console.log("On page bg");
+                chrome.tabs.sendMessage(details.tabId, {
+                    state: true
+                });
+            }
+        });
+    }
+});
