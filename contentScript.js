@@ -5,14 +5,44 @@
 */
 
 const serialNumberToField = (serialNumber) => {
-  serialNumber = serialNumber.toUpperCase();
-  const model = serialNumber.substring(0, 5);
-  const manufacturingDate = serialNumber.substring(5, 9);
-  const batch = serialNumber.substring(9, 13);
+  serialNumber = (serialNumber.toString()).toUpperCase();
+  let model = "";
   let possibleRefurb = false;
+  let manufacturingDate = "";
+  let batch = "";
+  switch (serialNumber.substring(0, 5)) {
+      case "01011":
+        model = "SPS-01-011, NEMA 10-30/10-30 / 24 Amp";
+        break;
+      case "B1011":
+        model = "SPS-C1-011, NEMA 10-30/10-30 / 24 Amp";
+        break;
+      case "01031":
+        model = "SPS-01-031, NEMA 10-30/14-50 / 24 Amp";
+        break;
+      case "B1031":
+        model = "SPS-01-031-01(black), NEMA 10-30/14-50 / 24 Amp";
+        break;
+      case "02022":
+        model = "SPS-02-022, NEMA 14-30/14-30 / 24 Amp";
+        break;
+      case "B2022":
+        model = "SPS-C2-022, NEMA 14-30/14-30 / 24 Amp";
+        break;
+      case "02032":
+        model = "SPS-02-032, NEMA 14-30/14-50 / 24 Amp";
+        break;
+      case "B2032":
+        model = "SPS-C2-032, NEMA 14-30/14-50 / 24 Amp";
+        break;
+  }
+  manufacturingDate = serialNumber.substring(5, 9);
+  batch = serialNumber.substring(9, 13);
+
   if (batch.includes('R'))
     possibleRefurb = true;
   return {
+    "serialNumber": serialNumber,
     "model": model, 
     "manufacturingDate": manufacturingDate, 
     "batch": batch,
@@ -96,7 +126,8 @@ const fillDate = (dateLabel, date) => {
     let containerId = "";
     const month = date.substring(0, 2);
     const year = date.substring(2, 4);
-
+  console.log(month);
+  console.log(year);
     // Find date container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
@@ -172,7 +203,7 @@ const detectSerialNumber = () => {
   // Loop through all text fields and check for any matches
   const inputs = document.querySelectorAll("input");
   for (const input of inputs) {
-    const matches = input.match(/([B]|[0])([1-2])([0])([1-3])([1-3])([0-1])([0-9])([0-9])([0-9])([0-9]|[R])([0-9])([0-9])([0-9])/gi);
+    const matches = input.value.match(/([B]|[0])([1-2])([0])([1-3])([1-3])([0-1])([0-9])([0-9])([0-9])([0-9]|[R])([0-9])([0-9])([0-9])/gi);
     if (matches) {
       return {
         "serialNumber": matches[0],
@@ -193,18 +224,32 @@ const injectAutofillButton = () => {
 
 (() => {
   chrome.runtime.onMessage.addListener((obj, sender, response) => {
-    const {state} = obj;
-    if (state) {
-      // document.onload = () => {
+    console.log("received a message");
+    const {action} = obj;
+    if (action === "NEW") {
       console.log("starting");
       // Get the whole create button regardess of its size
       const createButton = document.getElementById("createGlobalItem").parentNode;
-      console.log(createButton);
       createButton.addEventListener("click", () => {
         console.log("waw pressed");
       });
       console.log("added listener");
-      // };
+    } 
+    else if (action === "FILL") {
+      console.log("received fill message");
+      const detectedSerialNumber = detectSerialNumber();
+      // if (detectedSerialNumber) {
+        // const properties = serialNumberToField(detectedSerialNumber.serialNumber);
+        // console.log(properties);
+        // fillSmallField("Serial Number", properties.serialNumber);
+        // fillDropDownMenu("Product / Model", ["Splitter Switch", properties.model])
+        // fillDate("Manufacturing Date", properties.manufacturingDate);
+
+      fillSmallField("Serial Number", "B103201250001");
+      fillDropDownMenu("Product / Model", ["Splitter Switch", "SPS-C2-032, NEMA 14-30/14-50 / 24 Amp"])
+      fillDate("Manufacturing Date", "0125");
+
+      // }
     }
   });
 })();
