@@ -5,14 +5,14 @@
  */
 
 chrome.webNavigation.onCompleted.addListener((details) => {
-    if (details.frameId === 0) {
-        chrome.tabs.get(details.tabId, (tab) => {
-            if(tab.url === details.url) {
+    if(details.frameId === 0) {
+          chrome.tabs.get(details.tabId, (tab) => {
+              if(tab.url === details.url && tab.url.includes("splitvolt.atlassian")) {
                 console.log("On page bg");
                 chrome.tabs.sendMessage(details.tabId, {
-                    state: true
+                  action: "NEW"
                 });
             }
-        });
-    }
-});
+         });
+      }
+    });
