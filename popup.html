@@ -1,28 +1,31 @@
 <!DOCTYPE html>
+<html>
   <link href="popup.css" rel="stylesheet" type="text/css" />
   <script type="module" src="popup.js"></script>
+  <script type="module" src="contentScript.js"></script>
 
   <body>
-    <div id="header">
-      <!-- <img src="./assets/icon.png" style="width: 15%; height: 15%; float: left;"/> -->
-      <h3 id="title" style="text-align: left; vertical-align: middle;">Jira Autofill</h3>
+    <div id="header" class="panel">
+      <h2 id="title" style="text-align: left; vertical-align: middle;">Jira Autofill</h2>
+      <!-- <button id="test-button">check storage</button> -->
     </div>
+
     <div style="position: relative; padding-top: 1em; margin-top: 5px;"></div>
-    <div id="container">  
-      <h3>Fill fields</h3>
-      <form>
-      b: <input type="number" name="b" id="b"><br>
-      <button onclick="add()">Add</button>
-      </form>
-      <!-- <h3>Hierarchy</h3>
-      <div id="hierarchy">
-        <li>
-          <ul>a</ul>
-          <ul>a</ul>
-          <ul>a</ul>
-        </li> -->
+    <!-- <div id="container"> -->
+      <div id="toggle-wrapper" class="panel">
+        <h2>Enable Extension</h2>
+        <label class="switch">
+          <input id="enable-checkbox" type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
       </div>
-     
+    <!-- </div> -->
+    <div style="position: relative; padding-top: 1em; margin-top: 5px;"></div>
+    <div id="input-wrapper" class="panel" style="height: 4em;">
+      <!-- <form>
+        <input id="serial-number-input">
+      </form> -->
+      <button id="fill-serial-number">Fill Serial Number</button>
     </div>
   </body>
 </html>
