@@ -3,13 +3,13 @@
     "version": "0.1.0",
     "description": "Faster issue reporting with serial number decoder and canned responses",
     "permissions": ["storage", "tabs", "webNavigation"],
-    "host_permissions": ["https://*.atlassian.net/*"],
+    "host_permissions": ["https://splitvolt.atlassian.net/*"],
     "background": {
       "service_worker": "background.js"
     },
     "content_scripts": [
       {
-        "matches": ["https://*.atlassian.net/*"],
+        "matches": ["https://splitvolt.atlassian.net/*"],
         "js": ["contentScript.js"]
       }
     ],
@@ -21,7 +21,7 @@
           "assets/delete.png",
           "assets/save.png"
         ],
-        "matches": ["https://*.atlassian.net/*"]
+        "matches": ["https://splitvolt.atlassian.net/*"]
       }
     ],
     "action": {
