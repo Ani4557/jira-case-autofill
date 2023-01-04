@@ -1,33 +1,28 @@
 {
-    "name": "Jira Issue Autofill",
-    "version": "0.1.0",
-    "description": "Faster issue reporting with serial number decoder and canned responses",
-    "permissions": ["storage", "tabs", "webNavigation"],
-    "host_permissions": ["https://splitvolt.atlassian.net/*"],
-    "background": {
-      "service_worker": "background.js"
+  "name": "Jira Issue Autofill",
+  "version": "0.1.0",
+  "description": "Faster issue reporting with serial number decoder and canned responses",
+  "permissions": ["storage", "tabs", "webNavigation"],
+  "host_permissions": ["https://splitvolt.atlassian.net/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["https://splitvolt.atlassian.net/*"],
+    "js": ["contentScript.js"]
+  }],
+  "web_accessible_resources": [{
+    "resources": [],
+    "matches": ["https://splitvolt.atlassian.net/*"]
+  }],
+  "action": {
+    "default_icon": {
+      "16": "assets/icon.png",
+      "24": "assets/icon.png",
+      "32": "assets/icon.png"
     },
-    "content_scripts": [
-      {
-        "matches": ["https://splitvolt.atlassian.net/*"],
-        "js": ["contentScript.js"]
-      }
-    ],
-    "web_accessible_resources": [
-      {
-        "resources": [
-        ],
-        "matches": ["https://splitvolt.atlassian.net/*"]
-      }
-    ],
-    "action": {
-      "default_icon": {
-        "16": "assets/icon.png",
-        "24": "assets/icon.png",
-        "32": "assets/icon.png"
-      },
-      "default_title": "Autofill",
-      "default_popup": "popup.html"
-    },
-    "manifest_version": 3
-  }
+    "default_title": "Autofill",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 3
+}
