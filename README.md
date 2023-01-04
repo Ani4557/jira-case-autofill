@@ -2,4 +2,6 @@
 An extension for jira to autofill certain fields based on known data
 ---
 # Releases
-### 0.1 (1/3/2023)
+| Version      |    Date         | Release Notes                           |
+|--------------|-----------------|-----------------------------------------|
+| 0.1          | 01/03/2023      | First launch (Basic working principles) |
