@@ -69,18 +69,6 @@ const getParentContainerIdFromLabel = (labelText) => {
     }
 };
 
-const setNativeValue = (element, value) => {
-    const valueSetter = Object.getOwnPropertyDescriptor(element, "value").set;
-    const prototype = Object.getPrototypeOf(element);
-    const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, "value").set;
-
-    if (valueSetter && valueSetter !== prototypeValueSetter) {
-        prototypeValueSetter.call(element, value);
-    } else {
-        valueSetter.call(element, value);
-    }
-};
-
 const fillSmallField = (smallFieldLabel, text) => {
     // Find small field container based on its label and get its id
     const labels = document.querySelectorAll("label");
@@ -90,7 +78,7 @@ const fillSmallField = (smallFieldLabel, text) => {
 
             // Go up and get the container's id
             const smallFieldInput = document.querySelector(`#${parents[1].id} input`);
-            setNativeValue(smallFieldInput, text);
+            smallFieldInput.value = text;
             smallFieldInput.dispatchEvent(new Event("input", {
                 bubbles: true
             }));
@@ -99,26 +87,8 @@ const fillSmallField = (smallFieldLabel, text) => {
     }
 };
 
-// const fillSummary = (text) => {
-//     const summaryInput = document.getElementById("summary-field");
-//     setNativeValue(summaryInput, text);
-//     summaryInput.dispatchEvent(new Event("input", {
-//         bubbles: true
-//     }));
-// };
-
-// TODO: combine the 2 functions above by ignoring <span>*</span>
-// TODO: write backup code in case the index of parent div with an id changes
-
-// const fillDescription = (input, text) => {
-//     const i = document.querySelector(input);
-//     i.innerHTML = text; 
-// };
-
 const fillLargeField = (largeFieldLabelId, text) => {
     const descriptionContainer = document.querySelector(largeFieldLabelId);
-    
-
         //TODO: Upgrade fillLargeField
 };
 
@@ -126,8 +96,6 @@ const fillDate = (dateLabel, date) => {
     let containerId = "";
     const month = date.substring(0, 2);
     const year = date.substring(2, 4);
-  console.log(month);
-  console.log(year);
     // Find date container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
@@ -143,7 +111,7 @@ const fillDate = (dateLabel, date) => {
     for (const input of inputs) {
         if (input.id && input.id.includes("react-select")) {
             const reactSelectInput = document.getElementById(input.id);
-            setNativeValue(reactSelectInput, `${month}/1/20${year}`);
+            reactSelectInput.value = `${month}/1/20${year}`;
             reactSelectInput.dispatchEvent(new Event("input", {
                 bubbles: true
             }));
@@ -185,7 +153,7 @@ const fillDropDownMenu = (dropDownLabel, selectionPath) => {
 
         // Pop up the furthest menu
         const reactSelectInput = document.getElementById(reactSelectInputId);
-        setNativeValue(reactSelectInput, step);
+        reactSelectInput.value = step;
         reactSelectInput.dispatchEvent(new Event("input", {
             bubbles: true
         }));
@@ -214,42 +182,17 @@ const detectSerialNumber = () => {
   return null;
 };
 
-const injectAutofillButton = () => {
-
-};
-
-// fillSmallField("Serial Number", "020320122R007");
-// fillDate("Due date", "1020");
-// fillDropDownMenu("Product / Model", ["Splitter Switch", "SPS-01-031, NEMA 10-30/14-50 / 24 Amp"]);
-
 (() => {
   chrome.runtime.onMessage.addListener((obj, sender, response) => {
-    console.log("received a message");
     const {action} = obj;
-    if (action === "NEW") {
-      console.log("starting");
-      // Get the whole create button regardess of its size
-      const createButton = document.getElementById("createGlobalItem").parentNode;
-      createButton.addEventListener("click", () => {
-        console.log("waw pressed");
-      });
-      console.log("added listener");
-    } 
-    else if (action === "FILL") {
-      console.log("received fill message");
+    if (action === "FILL") {
       const detectedSerialNumber = detectSerialNumber();
-      // if (detectedSerialNumber) {
-        // const properties = serialNumberToField(detectedSerialNumber.serialNumber);
-        // console.log(properties);
-        // fillSmallField("Serial Number", properties.serialNumber);
-        // fillDropDownMenu("Product / Model", ["Splitter Switch", properties.model])
-        // fillDate("Manufacturing Date", properties.manufacturingDate);
-
-      fillSmallField("Serial Number", "B103201250001");
-      fillDropDownMenu("Product / Model", ["Splitter Switch", "SPS-C2-032, NEMA 14-30/14-50 / 24 Amp"])
-      fillDate("Manufacturing Date", "0125");
-
-      // }
+      if (detectedSerialNumber) {
+        const properties = serialNumberToField(detectedSerialNumber.serialNumber);
+        fillSmallField("Serial Number", properties.serialNumber);
+        fillDropDownMenu("Product / Model", ["Splitter Switch", properties.model])
+        fillDate("Manufacturing Date", properties.manufacturingDate);
+      }
     }
   });
 })();
