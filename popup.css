@@ -1,6 +1,5 @@
 html {
     background-color: #ffffff;
-    /* #2d2d2f; */
     width: 240px;
     height: auto;
 }
@@ -11,7 +10,6 @@ html {
 
 .panel {
     background-color: #e9ebec;
-    /* #1e1e1e; */
     height: auto;
     border-radius: 3px;
     padding: 3px;
@@ -96,7 +94,6 @@ input:checked + .slider:before {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 	background-color: #1963d1;
-    /* #1585f4; */
 	-webkit-border-radius:42px;
 	-moz-border-radius:42px;
 	border-radius:42px;
