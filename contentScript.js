@@ -189,9 +189,9 @@ const detectSerialNumber = () => {
       const detectedSerialNumber = detectSerialNumber();
       if (detectedSerialNumber) {
         const properties = serialNumberToField(detectedSerialNumber.serialNumber);
-        fillSmallField("Serial Number", properties.serialNumber);
-        fillDropDownMenu("Product / Model", ["Splitter Switch", properties.model])
-        fillDate("Manufacturing Date", properties.manufacturingDate);
+        fillSmallField("#️⃣Serial Number", properties.serialNumber);
+        fillDropDownMenu("🔌Product / Model", ["Splitter Switch", properties.model])
+        fillDate("🗓️Manufacturing Date", properties.manufacturingDate);
       }
     }
   });
