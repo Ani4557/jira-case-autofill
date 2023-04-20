@@ -1,5 +1,6 @@
 html {
-    background-color: #2d2d2f;
+    background-color: #ffffff;
+    /* #2d2d2f; */
     width: 240px;
     height: auto;
 }
@@ -9,14 +10,15 @@ html {
 }
 
 .panel {
-    background-color: #1e1e1e;
+    background-color: #e9ebec;
+    /* #1e1e1e; */
     height: auto;
     border-radius: 3px;
     padding: 3px;
 }
 
 h2 {
-    color: white;
+    color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     display: inline-block;
@@ -93,11 +95,12 @@ input:checked + .slider:before {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-	background-color:#1585f4;
+	background-color: #1963d1;
+    /* #1585f4; */
 	-webkit-border-radius:42px;
 	-moz-border-radius:42px;
 	border-radius:42px;
-	border:1px solid #1585f4;
+	border:1px solid #1963d1;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -107,7 +110,7 @@ input:checked + .slider:before {
 	text-decoration:none;
 }
 #fill-serial-number:hover {
-	background-color:#0f91f4;
+	background-color: #1b6be2;
 }
 #fill-serial-number:active {
 	position:relative;
