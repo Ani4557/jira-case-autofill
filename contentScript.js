@@ -49,7 +49,7 @@ const serialNumberToField = (serialNumber) => {
     "possibleRefurb": possibleRefurb
   };
 };
-    
+
 const getParents = (element) => {
   let parents = [];
   while (element.parentNode && element.parentNode.nodeName.toLowerCase() != "body") {
@@ -69,11 +69,12 @@ const getParentContainerIdFromLabel = (labelText) => {
     }
 };
 
-const fillSmallField = (smallFieldLabel, text) => {
+const fillSmallField = (smallFieldLabel, text, exactMatch=true) => {
     // Find small field container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === smallFieldLabel) {
+        if ( (exactMatch && label.innerHTML === smallFieldLabel) 
+              || (!exactMatch && label.innerHTML.includes(smallFieldLabel)) ) {
             const parents = getParents(label);
 
             // Go up and get the container's id
@@ -92,14 +93,15 @@ const fillLargeField = (largeFieldLabelId, text) => {
         //TODO: Upgrade fillLargeField
 };
 
-const fillDate = (dateLabel, date) => {
+const fillDate = (dateLabel, date, exactMatch=true) => {
     let containerId = "";
     const month = date.substring(0, 2);
     const year = date.substring(2, 4);
     // Find date container based on its label and get its id
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === dateLabel) {
+        if ( (exactMatch && label.innerHTML === dateLabel) 
+              || (!exactMatch && label.innerHTML.includes(dateLabel)) ) {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
@@ -127,14 +129,16 @@ const fillDate = (dateLabel, date) => {
     }
 };
 
-const fillDropDownMenu = (dropDownLabel, selectionPath) => {
+const fillDropDownMenu = (dropDownLabel, selectionPath, exactMatch=true) => {
     // Selection path would look something like this: ["Category", "Subcategory", "Product"]
     // Find dropdown menu based on its label and get its id
     // Use the id to then trigger the input in order to display the dropdown menu
+
     let containerId = "";
     const labels = document.querySelectorAll("label");
     for (const label of labels) {
-        if (label.innerHTML === dropDownLabel) {
+        if ( (exactMatch && label.innerHTML === dropDownLabel) 
+              || (!exactMatch && label.innerHTML.includes(dropDownLabel)) ) {
             const parents = getParents(label);
             containerId = parents[1].id;
             break;
@@ -189,9 +193,9 @@ const detectSerialNumber = () => {
       const detectedSerialNumber = detectSerialNumber();
       if (detectedSerialNumber) {
         const properties = serialNumberToField(detectedSerialNumber.serialNumber);
-        fillSmallField("#️⃣Serial Number", properties.serialNumber);
-        fillDropDownMenu("🔌Product / Model", ["Splitter Switch", properties.model])
-        fillDate("🗓️Manufacturing Date", properties.manufacturingDate);
+        fillSmallField("Serial Number", properties.serialNumber, false);
+        fillDropDownMenu("Product / Model", ["Splitter Switch", properties.model], false);
+        fillDate("Manufacturing Date", properties.manufacturingDate, false);
       }
     }
   });
