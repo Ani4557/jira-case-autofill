@@ -1,28 +1,29 @@
 html {
-    background-color: #ffffff;
+    background-color: #272727;
     width: 240px;
     height: auto;
 }
 
 #header {
     top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .panel {
-    background-color: #e9ebec;
-    height: auto;
+    background-color: #2C2C2C;
+    position: relative;
+    padding-top: 3px;
     border-radius: 3px;
-    padding: 3px;
+    /* padding: 3px; */
+    /* border: 1px solid #5A5A5A;*/
 }
 
-h2 {
-    color: black;
+#title {
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    left: 3px;
 }
 
 .switch {
@@ -66,7 +67,7 @@ h2 {
 }
   
 input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #186BD8;
 }
   
 input:focus + .slider {
